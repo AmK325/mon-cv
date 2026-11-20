@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aminata Deffa Haby KANE | Alternance Informatique & Data Industrielle</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement des polices Inter et JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Icônes Lucide via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuration personnalisée stricte basée sur la palette colors.png -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        // Couleurs exactes de colors.png
+                        petrol: '#016180',      // Bleu pétrole profond
+                        steel: '#4A8CB0',       // Bleu acier doux
+                        cream: '#F8EDE5',       // Crème chaleureux très doux
+                        terracotta: '#8C5C47',  // Marron moyen / terre cuite
+                        espresso: '#4C2C17',    // Marron très foncé / expresso
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fond blanc pur avec texte principal marron expresso (#4C2C17) */
+        body {
+            background-color: #FFFFFF;
+            color: #4C2C17;
+            overflow-x: hidden;
+        }
+
+        /* Conteneur des bulles flottantes en arrière-plan */
+        .bubbles-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -160px;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        /* Variantes de bulles selon la palette exacte */
+        .bubble-petrol {
+            background: radial-gradient(circle at 30% 30%, rgba(1, 97, 128, 0.14), rgba(1, 97, 128, 0.03));
+            border: 1px solid rgba(1, 97, 128, 0.18);
+        }
+
+        .bubble-steel {
+            background: radial-gradient(circle at 30% 30%, rgba(74, 140, 176, 0.18), rgba(74, 140, 176, 0.04));
+            border: 1px solid rgba(74, 140, 176, 0.22);
+        }
+
+        .bubble-cream {
+            background: radial-gradient(circle at 30% 30%, rgba(248, 237, 229, 0.95), rgba(248, 237, 229, 0.55));
+            border: 1px solid rgba(140, 92, 71, 0.18);
+        }
+
+        .bubble-terracotta {
+            background: radial-gradient(circle at 30% 30%, rgba(140, 92, 71, 0.14), rgba(140, 92, 71, 0.03));
+            border: 1px solid rgba(140, 92, 71, 0.18);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.95);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-52vh) translateX(22px) scale(1);
+            }
+            85% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: translateY(-115vh) translateX(-18px) scale(1.04);
+                opacity: 0;
+            }
+        }
+
+        /* Cartes lumineuses sur fond blanc / crème avec relief doux */
+        .surface-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(140, 92, 71, 0.2);
+            box-shadow: 0 10px 30px -12px rgba(76, 44, 23, 0.08);
+            transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .surface-card:hover {
+            transform: translateY(-4px);
+            border-color: #4A8CB0;
+            box-shadow: 0 16px 36px -12px rgba(1, 97, 128, 0.14);
+        }
+
+        .cream-card {
+            background: rgba(248, 237, 229, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(140, 92, 71, 0.22);
+            box-shadow: 0 10px 28px -12px rgba(76, 44, 23, 0.07);
+            transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .cream-card:hover {
+            transform: translateY(-4px);
+            border-color: #016180;
+            box-shadow: 0 16px 34px -12px rgba(1, 97, 128, 0.12);
+        }
+
+        /* Animation fluide du menu déroulant */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Optimisation pour l'impression / export PDF */
+        @media print {
+            body {
+                background: #FFFFFF !important;
+                color: #4C2C17 !important;
+            }
+            .no-print, .bubbles-container {
+                display: none !important;
+            }
+            .surface-card, .cream-card {
+                box-shadow: none !important;
+                break-inside: avoid;
+                border: 1px solid #8C5C47 !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-petrol selection:text-white">
+
+    <!-- Arrière-plan animé avec bulles translucides (#016180, #4A8CB0, #F8EDE5, #8C5C47) -->
+    <div id="bubbles-layer" class="bubbles-container" aria-hidden="true"></div>
+
+    <!-- ===================================================================== -->
+    <!-- BARRE DE NAVIGATION FIXE AVEC MENU DÉROULANT                          -->
+    <!-- ===================================================================== -->
+    <header class="sticky top-0 z-40 w-full bg-white/85 backdrop-blur-md border-b border-cream shadow-sm no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- Monogramme & Identité -->
+                <a href="#profil" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-2xl bg-petrol flex items-center justify-center text-white font-mono font-bold text-base shadow-md group-hover:bg-steel transition-colors">
+                        AK
+                    </div>
+                    <div>
+                        <span class="block font-bold text-espresso tracking-tight text-sm sm:text-base">Aminata Deffa Haby KANE</span>
+                        <span class="block font-mono text-xs text-terracotta">Informatique & Data Industrielle</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center gap-1.5 lg:gap-3">
+                    <a href="#profil" class="px-3 py-2 rounded-xl text-sm font-medium text-espresso hover:text-petrol hover:bg-cream/80 transition-colors">
+                        Profil
+                    </a>
+
+                    <!-- MENU DÉROULANT INTERACTIF SUR "COMPÉTENCES" -->
+                    <div class="relative" id="desktop-dropdown-wrapper">
+                        <button type="button" id="desktop-dropdown-btn" aria-expanded="false" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold text-petrol bg-cream hover:bg-steel/15 border border-terracotta/25 transition-all">
+                            <span>Compétences</span>
+                            <i data-lucide="chevron-down" id="dropdown-chevron" class="w-4 h-4 text-terracotta transition-transform duration-200"></i>
+                        </button>
+
+                        <!-- Panneau du menu déroulant -->
+                        <div id="desktop-dropdown-menu" class="dropdown-menu absolute left-0 mt-2 w-80 rounded-2xl bg-white border border-terracotta/25 shadow-xl p-2 z-50">
+                            <div class="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider text-terracotta font-semibold">
+                                Filtrer par domaine technique
+                            </div>
+                            <a href="#competences" onclick="filterSkills('all')" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/80 transition-colors group">
+                                <div class="p-2 rounded-lg bg-petrol/10 text-petrol group-hover:bg-petrol group-hover:text-white transition-colors">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-espresso">Toutes les compétences</p>
+                                    <p class="text-xs text-terracotta">Socle complet Industrie 4.0 & Data</p>
+                                </div>
+                            </a>
+                            <a href="#competences" onclick="filterSkills('iot')" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/80 transition-colors group">
+                                <div class="p-2 rounded-lg bg-steel/15 text-petrol group-hover:bg-petrol group-hover:text-white transition-colors">
+                                    <i data-lucide="cpu" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-espresso">Ingénierie Industrielle & IoT</p>
+                                    <p class="text-xs text-terracotta">IoT, Automatismes, Réseaux, CEM</p>
+                                </div>
+                            </a>
+                            <a href="#competences" onclick="filterSkills('dev')" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/80 transition-colors group">
+                                <div class="p-2 rounded-lg bg-terracotta/15 text-terracotta group-hover:bg-terracotta group-hover:text-white transition-colors">
+                                    <i data-lucide="code-2" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-espresso">Développement Web & Python</p>
+                                    <p class="text-xs text-terracotta">Python (POO, Tkinter), HTML/CSS/JS, PHP</p>
+                                </div>
+                            </a>
+                            <a href="#competences" onclick="filterSkills('data')" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/80 transition-colors group">
+                                <div class="p-2 rounded-lg bg-steel/15 text-petrol group-hover:bg-petrol group-hover:text-white transition-colors">
+                                    <i data-lucide="database" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-espresso">Data & Bases de Données</p>
+                                    <p class="text-xs text-terracotta">SQL, MCD/MLD/MPD, Power BI, MATLAB</p>
+                                </div>
+                            </a>
+                            <a href="#competences" onclick="filterSkills('outils')" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/80 transition-colors group">
+                                <div class="p-2 rounded-lg bg-terracotta/15 text-terracotta group-hover:bg-terracotta group-hover:text-white transition-colors">
+                                    <i data-lucide="wrench" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-espresso">Outils & Méthodes Agiles</p>
+                                    <p class="text-xs text-terracotta">DBeaver, SCRUM, Pack Office, Outils IA</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="#projets" class="px-3 py-2 rounded-xl text-sm font-medium text-espresso hover:text-petrol hover:bg-cream/80 transition-colors">
+                        Projets
+                    </a>
+                    <a href="#experiences" class="px-3 py-2 rounded-xl text-sm font-medium text-espresso hover:text-petrol hover:bg-cream/80 transition-colors">
+                        Expériences
+                    </a>
+                    <a href="#formation" class="px-3 py-2 rounded-xl text-sm font-medium text-espresso hover:text-petrol hover:bg-cream/80 transition-colors">
+                        Formation
+                    </a>
+                    <a href="#contact" class="ml-1 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-petrol hover:bg-steel shadow-sm transition-colors">
+                        Contact
+                    </a>
+                </nav>
+
+                <!-- Bouton Menu Mobile -->
+                <button type="button" id="mobile-menu-btn" aria-label="Ouvrir le menu" class="md:hidden p-2.5 rounded-xl bg-cream border border-terracotta/25 text-espresso hover:text-petrol transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile avec sous-menu déroulant -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-cream bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 shadow-lg">
+            <a href="#profil" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-espresso hover:bg-cream">Profil</a>
+            
+            <!-- Sous-menu déroulant mobile -->
+            <div class="rounded-xl bg-cream/70 border border-terracotta/20 overflow-hidden">
+                <button type="button" id="mobile-accordion-btn" class="w-full flex items-center justify-between px-4 py-2.5 text-base font-semibold text-petrol">
+                    <span>Compétences (Catégories)</span>
+                    <i data-lucide="chevron-down" id="mobile-accordion-chevron" class="w-4 h-4 text-terracotta transition-transform"></i>
+                </button>
+                <div id="mobile-accordion-content" class="hidden px-3 pb-3 space-y-1 border-t border-terracotta/15 pt-2 bg-white/60">
+                    <a href="#competences" onclick="filterSkills('all')" class="mobile-link block px-3 py-2 rounded-lg text-sm font-medium text-espresso hover:bg-cream">• Toutes les compétences</a>
+                    <a href="#competences" onclick="filterSkills('iot')" class="mobile-link block px-3 py-2 rounded-lg text-sm font-medium text-espresso hover:bg-cream">• Ingénierie Industrielle & IoT</a>
+                    <a href="#competences" onclick="filterSkills('dev')" class="mobile-link block px-3 py-2 rounded-lg text-sm font-medium text-espresso hover:bg-cream">• Développement Web & Python</a>
+                    <a href="#competences" onclick="filterSkills('data')" class="mobile-link block px-3 py-2 rounded-lg text-sm font-medium text-espresso hover:bg-cream">• Data & Bases de Données</a>
+                    <a href="#competences" onclick="filterSkills('outils')" class="mobile-link block px-3 py-2 rounded-lg text-sm font-medium text-espresso hover:bg-cream">• Outils & Méthodes Agiles</a>
+                </div>
+            </div>
+
+            <a href="#projets" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-espresso hover:bg-cream">Projets</a>
+            <a href="#experiences" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-espresso hover:bg-cream">Expériences</a>
+            <a href="#formation" class="mobile-link block px-4 py-2.5 rounded-xl text-base font-medium text-espresso hover:bg-cream">Formation & Atouts</a>
+            <a href="#contact" class="mobile-link block px-4 py-3 rounded-xl text-center text-base font-semibold text-white bg-petrol mt-3">
+                Me contacter
+            </a>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- CONTENU PRINCIPAL                                                     -->
+    <!-- ===================================================================== -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 space-y-20">
+
+        <!-- 1. SECTION HERO / EN-TÊTE -->
+        <section id="profil" class="scroll-mt-24">
+            <div class="cream-card rounded-3xl p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+                <!-- Bulle décorative subtile -->
+                <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-steel/15 blur-2xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    <!-- Colonne principale texte -->
+                    <div class="lg:col-span-8 space-y-5">
+                        <!-- Badge disponibilité -->
+                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-steel/40 text-petrol text-xs sm:text-sm font-semibold shadow-sm">
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-steel opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-petrol"></span>
+                            </span>
+                            <span>Recherche d'alternance • 24 mois dès octobre 2026</span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-espresso leading-tight">
+                                Aminata Deffa Haby <span class="text-petrol">KANE</span>
+                            </h1>
+                            <h2 class="text-lg sm:text-2xl font-bold text-terracotta">
+                                Alternance Informatique industrielle / Data industrielle
+                            </h2>
+                        </div>
+
+                        <p class="text-espresso/90 text-base sm:text-lg leading-relaxed max-w-2xl">
+                            Étudiante à l'<strong class="text-petrol font-semibold">ISEP</strong> spécialisée en <strong class="text-espresso font-semibold">Transformation Numérique des Industries</strong>, je développe des compétences en Industrie 4.0, IoT, robotique, automatismes et électronique. Mon socle actuel est logiciel et data (Python, SQL, HTML/CSS/JS), avec une première expérience concrète de projet IoT en tant que Product Owner lors d'un projet scolaire.
+                        </p>
+
+                        <!-- Coordonnées rapides cliquables -->
+                        <div class="flex flex-wrap gap-2.5 text-xs sm:text-sm font-medium pt-1">
+                            <span class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-terracotta/20 text-espresso">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-petrol"></i> Île-de-France
+                            </span>
+                            <a href="mailto:kaminatadeffahaby@gmail.com" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-petrol hover:text-white border border-terracotta/20 text-espresso transition-colors">
+                                <i data-lucide="mail" class="w-4 h-4 text-petrol group-hover:text-white"></i> kaminatadeffahaby@gmail.com
+                            </a>
+                            <a href="tel:+33666430869" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-petrol hover:text-white border border-terracotta/20 text-espresso transition-colors">
+                                <i data-lucide="phone" class="w-4 h-4 text-petrol"></i> +33 6 66 43 08 69
+                            </a>
+                            <a href="https://github.com/AmK325" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-espresso hover:text-white border border-terracotta/20 text-espresso transition-colors font-mono">
+                                <i data-lucide="github" class="w-4 h-4 text-terracotta"></i> @AmK325
+                            </a>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="flex flex-wrap items-center gap-4 pt-3 no-print">
+                            <a href="#contact" class="px-6 py-3.5 rounded-2xl font-semibold text-white bg-petrol hover:bg-steel shadow-md transition-all flex items-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Me contacter</span>
+                            </a>
+                            <button type="button" onclick="window.print()" class="px-6 py-3.5 rounded-2xl font-semibold text-espresso bg-white hover:bg-cream border-2 border-petrol transition-all flex items-center gap-2">
+                                <i data-lucide="printer" class="w-4 h-4 text-petrol"></i>
+                                <span>Télécharger / Imprimer le CV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Colonne latérale : Carte Identité & Profil ISEP -->
+                    <div class="lg:col-span-4">
+                        <div class="bg-white rounded-3xl p-6 border border-terracotta/25 shadow-sm space-y-5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-petrol to-steel flex items-center justify-center text-white font-bold text-2xl shadow-md shrink-0">
+                                    AK
+                                </div>
+                                <div>
+                                    <span class="inline-block px-2.5 py-0.5 rounded-lg bg-cream text-terracotta font-mono text-xs font-semibold mb-1">
+                                        ISEP • Bachelor TNO
+                                    </span>
+                                    <h3 class="font-bold text-espresso text-base leading-snug">Transformation Numérique des Industries</h3>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 pt-2 border-t border-cream text-sm">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-terracotta">Disponibilité :</span>
+                                    <span class="font-semibold text-espresso">Octobre 2026</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-terracotta">Durée contrat :</span>
+                                    <span class="font-semibold text-petrol">24 mois</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-terracotta">Mobilité :</span>
+                                    <span class="font-semibold text-espresso">Île-de-France</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-terracotta">Anglais :</span>
+                                    <span class="font-semibold text-espresso">Niveau C1</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex gap-2 no-print">
+                                <a href="https://www.linkedin.com/search/results/all/?keywords=Aminata%20Deffa%20Haby%20KANE" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-steel/15 hover:bg-steel hover:text-white text-petrol font-semibold text-xs text-center transition-colors flex items-center justify-center gap-1.5">
+                                    <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                                </a>
+                                <a href="https://github.com/AmK325" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-cream hover:bg-espresso hover:text-white text-espresso font-semibold text-xs text-center transition-colors flex items-center justify-center gap-1.5">
+                                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SECTION COMPÉTENCES TECHNIQUES (AVEC FILTRES SYNCHRONISÉS) -->
+        <section id="competences" class="space-y-8 scroll-mt-24">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Savoir-faire & Technologies</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Compétences Techniques</h2>
+                </div>
+
+                <!-- Onglets de filtres rapides synchronisés avec le menu déroulant -->
+                <div class="flex flex-wrap gap-2 no-print" id="skill-filters">
+                    <button type="button" onclick="filterSkills('all')" data-filter="all" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-petrol text-white shadow-sm transition-all">
+                        Toutes
+                    </button>
+                    <button type="button" onclick="filterSkills('iot')" data-filter="iot" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-cream text-espresso hover:bg-steel/20 border border-terracotta/20 transition-all">
+                        Industrie & IoT
+                    </button>
+                    <button type="button" onclick="filterSkills('dev')" data-filter="dev" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-cream text-espresso hover:bg-steel/20 border border-terracotta/20 transition-all">
+                        Dev Web & Python
+                    </button>
+                    <button type="button" onclick="filterSkills('data')" data-filter="data" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-cream text-espresso hover:bg-steel/20 border border-terracotta/20 transition-all">
+                        Data & Bases de données
+                    </button>
+                    <button type="button" onclick="filterSkills('outils')" data-filter="outils" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-cream text-espresso hover:bg-steel/20 border border-terracotta/20 transition-all">
+                        Outils & Agilité
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grille des 4 pôles de compétences -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="skills-grid">
+                
+                <!-- Carte 1 : Ingénierie des Systèmes Industriels & IoT -->
+                <div class="skill-card surface-card rounded-3xl p-6 sm:p-7 space-y-4" data-category="iot">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-petrol text-white flex items-center justify-center shadow-sm">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-espresso">Ingénierie des Systèmes Industriels & IoT</h3>
+                            <p class="text-xs font-mono text-petrol">Industrie 4.0 & Terrain</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Objets connectés (IoT)</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Instrumentation industrielle</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Réseaux industriels</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Automatismes</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Électronique & CEM</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Maintenance industrielle</span>
+                    </div>
+                </div>
+
+                <!-- Carte 2 : Développement Web & Python -->
+                <div class="skill-card surface-card rounded-3xl p-6 sm:p-7 space-y-4" data-category="dev">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-terracotta text-white flex items-center justify-center shadow-sm">
+                            <i data-lucide="code-2" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-espresso">Développement Web & Python</h3>
+                            <p class="text-xs font-mono text-terracotta">Programmation & Architecture</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Python (POO)</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Programmation événementielle (Tkinter)</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">HTML / CSS</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">JavaScript</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">PHP / WordPress</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Architecture des ordinateurs</span>
+                    </div>
+                </div>
+
+                <!-- Carte 3 : Bases de Données & Data -->
+                <div class="skill-card surface-card rounded-3xl p-6 sm:p-7 space-y-4" data-category="data">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-steel text-white flex items-center justify-center shadow-sm">
+                            <i data-lucide="database" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-espresso">Bases de Données & Data</h3>
+                            <p class="text-xs font-mono text-petrol">Modélisation & Visualisation</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Création & gestion de BDD</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Script SQL</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Modélisation MCD / MLD / MPD</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Power BI (Dashboards)</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">MATLAB</span>
+                    </div>
+                </div>
+
+                <!-- Carte 4 : Outils & Productivité -->
+                <div class="skill-card surface-card rounded-3xl p-6 sm:p-7 space-y-4" data-category="outils">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-espresso text-white flex items-center justify-center shadow-sm">
+                            <i data-lucide="wrench" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-espresso">Outils & Productivité</h3>
+                            <p class="text-xs font-mono text-terracotta">Environnement & Agilité</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">DBeaver</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Méthodes Agiles (SCRUM)</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-steel/15 text-petrol border border-steel/30">Microsoft Pack Office</span>
+                        <span class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cream text-espresso border border-terracotta/25">Outils IA (Claude, Copilot, ChatGPT)</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. SECTION PROJETS PHARES -->
+        <section id="projets" class="space-y-8 scroll-mt-24">
+            <div>
+                <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Réalisations & Gestion de produit</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Projets Phares</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Projet 1 : Pet Health (IoT & App Mobile) -->
+                <article class="cream-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-l-4 border-l-petrol">
+                    <div class="space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-petrol text-white">
+                                Product Owner • IoT & App Mobile
+                            </span>
+                            <span class="text-xs font-mono font-semibold text-terracotta bg-white px-3 py-1 rounded-full border border-terracotta/20">
+                                ISEP • En cours
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-espresso">
+                            Projet Pet Health (Collier connecté & Application)
+                        </h3>
+                        <ul class="space-y-2 text-sm sm:text-base text-espresso/90 leading-relaxed">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-petrol shrink-0 mt-0.5"></i>
+                                <span><strong>Gestion de produit & Agilité :</strong> vision produit, roadmap, priorisation, KPIs, méthodologie SCRUM, rédaction du backlog, user stories et critères d'acceptation.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-petrol shrink-0 mt-0.5"></i>
+                                <span><strong>Analyse & Stratégie :</strong> étude de faisabilité, analyse des risques et proposition de valeur alignée avec les besoins utilisateurs.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-petrol shrink-0 mt-0.5"></i>
+                                <span><strong>Solution IoT :</strong> conception d'un collier connecté (capteurs, GPS, QR code) avec bilans hebdomadaires, alertes santé et suivi du sommeil.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-terracotta/20 flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-white text-petrol font-mono text-xs font-semibold border border-steel/30">#IoT</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white text-petrol font-mono text-xs font-semibold border border-steel/30">#ProductOwner</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white text-terracotta font-mono text-xs font-semibold border border-terracotta/30">#SCRUM</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white text-terracotta font-mono text-xs font-semibold border border-terracotta/30">#Capteurs_GPS</span>
+                    </div>
+                </article>
+
+                <!-- Projet 2 : Application d'échanges de compétences ISEP -->
+                <article class="surface-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-l-4 border-l-terracotta">
+                    <div class="space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-terracotta text-white">
+                                Développement Web & BDD
+                            </span>
+                            <span class="text-xs font-mono font-semibold text-petrol bg-cream px-3 py-1 rounded-full border border-steel/30">
+                                ISEP • 2026
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-espresso">
+                            Application d'échanges de compétences entre élèves ISEP
+                        </h3>
+                        <p class="text-sm sm:text-base text-espresso/90 leading-relaxed">
+                            Projet web réalisé en équipe visant à faciliter l'entraide et le partage de savoir-faire entre les étudiants de l'école.
+                        </p>
+                        <ul class="space-y-2 text-sm sm:text-base text-espresso/90 leading-relaxed">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-terracotta shrink-0 mt-0.5"></i>
+                                <span><strong>Développement Front-end & Logique :</strong> conception d'une interface web interactive en HTML et JavaScript.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-terracotta shrink-0 mt-0.5"></i>
+                                <span><strong>Architecture Data :</strong> création et structuration d'une base de données sécurisée pour gérer les profils et mises en relation.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-cream flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-cream text-espresso font-mono text-xs font-semibold border border-terracotta/25">#HTML5</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-cream text-espresso font-mono text-xs font-semibold border border-terracotta/25">#JavaScript</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-steel/15 text-petrol font-mono text-xs font-semibold border border-steel/30">#BaseDeDonnées</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-steel/15 text-petrol font-mono text-xs font-semibold border border-steel/30">#TravailEnÉquipe</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 4. SECTION EXPÉRIENCES & FORMATION -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Colonne Expériences (6 colonnes) -->
+            <section id="experiences" class="lg:col-span-6 space-y-6 scroll-mt-24">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Parcours terrain</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Expériences</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Expérience 1 : Tenexa Hackathon -->
+                    <div class="surface-card rounded-3xl p-6 sm:p-7 space-y-3 border-t-4 border-t-petrol">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-mono font-bold text-petrol bg-steel/15 px-3 py-1 rounded-full">
+                                Oct. 2025 – Déc. 2025
+                            </span>
+                            <span class="text-xs font-medium text-terracotta flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Issy-les-Moulineaux, France
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-espresso">Développeuse — Finaliste HACKATHON</h3>
+                            <p class="text-sm font-bold text-terracotta">Tenexa</p>
+                        </div>
+                        <ul class="space-y-1.5 text-sm text-espresso/90 list-disc list-inside">
+                            <li>Développement d'une application mobile en <strong>React Native</strong> en équipe.</li>
+                            <li>Conception de l'interface utilisateur (UI) et de la logique fonctionnelle.</li>
+                            <li>Travail en équipe en méthodologie collaborative avec fortes contraintes de temps.</li>
+                            <li>Présentation technique du projet devant un jury professionnel.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Expérience 2 : Garde d'enfants & soutien scolaire -->
+                    <div class="cream-card rounded-3xl p-6 sm:p-7 space-y-3 border-t-4 border-t-terracotta">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-mono font-bold text-terracotta bg-white px-3 py-1 rounded-full border border-terracotta/20">
+                                Juil. 2023 – Août 2025
+                            </span>
+                            <span class="text-xs font-medium text-espresso/80 flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Dakar, Sénégal
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-espresso">Garde d'enfants et soutien scolaire</h3>
+                            <p class="text-sm font-bold text-petrol">En autonomie</p>
+                        </div>
+                        <ul class="space-y-1.5 text-sm text-espresso/90 list-disc list-inside">
+                            <li>Développement du sens des responsabilités et de l'organisation.</li>
+                            <li>Autonomie et pédagogie au quotidien.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colonne Diplômes & Formations (6 colonnes) -->
+            <section id="formation" class="lg:col-span-6 space-y-6 scroll-mt-24">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Cursus académique</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Diplômes et Formations</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Formation 1 : ISEP -->
+                    <div class="cream-card rounded-3xl p-6 sm:p-7 space-y-3 border-t-4 border-t-petrol">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-mono font-bold text-white bg-petrol px-3 py-1 rounded-full">
+                                Sept. 2025 – Mai 2028
+                            </span>
+                            <span class="text-xs font-medium text-terracotta flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Issy-les-Moulineaux, France
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-espresso">Bachelor Informatique et Projets Numériques (TNO)</h3>
+                            <p class="text-sm font-bold text-petrol">ISEP — École d'ingénieurs du numérique</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-sm text-espresso/90 pt-1">
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-petrol"></span> Objets connectés (IoT) & Automatismes</div>
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-petrol"></span> Instrumentation & Réseaux industriels</div>
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-petrol"></span> CEM & Maintenance industrielle</div>
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span> Programmation Python & SQL</div>
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span> Architecture des ordinateurs</div>
+                            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span> Développement Web (HTML/CSS/JS)</div>
+                        </div>
+                    </div>
+
+                    <!-- Formation 2 : Baccalauréat -->
+                    <div class="surface-card rounded-3xl p-6 sm:p-7 space-y-3 border-t-4 border-t-steel">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-mono font-bold text-petrol bg-steel/15 px-3 py-1 rounded-full">
+                                Oct. 2024 – Juil. 2025
+                            </span>
+                            <span class="text-xs font-medium text-terracotta flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Dakar, Sénégal
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-espresso">Baccalauréat Scientifique — <span class="text-petrol">Mention BIEN</span></h3>
+                            <p class="text-sm font-bold text-terracotta">Lycée Privé Birago Diop</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 5. SECTION LANGUES, ATOUTS & CENTRE D'INTÉRÊT -->
+        <section class="space-y-6">
+            <div>
+                <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Personnalité & Engagements</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Langues, Atouts & Centres d'intérêt</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Langues -->
+                <div class="surface-card rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2.5 rounded-xl bg-petrol/10 text-petrol">
+                            <i data-lucide="languages" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-espresso">Langues</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="p-3 rounded-2xl bg-cream/80 border border-terracotta/15 flex items-center justify-between">
+                            <span class="font-semibold text-espresso">Français</span>
+                            <span class="text-xs font-mono font-bold text-petrol bg-white px-2.5 py-1 rounded-lg">Langue maternelle</span>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-cream/80 border border-terracotta/15 flex items-center justify-between">
+                            <span class="font-semibold text-espresso">Anglais</span>
+                            <span class="text-xs font-mono font-bold text-white bg-petrol px-2.5 py-1 rounded-lg">Niveau C1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atouts & Engagements -->
+                <div class="cream-card rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2.5 rounded-xl bg-terracotta/15 text-terracotta">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-espresso">Atouts & Engagements</h3>
+                    </div>
+                    <ul class="space-y-2 text-sm text-espresso/90">
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-petrol shrink-0"></span> <strong>Ambassadrice BECOMTECH</strong></li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-steel shrink-0"></span> Autoformation sur OpenClassrooms (Power BI)</li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-terracotta shrink-0"></span> Bénévole à une JPO de l'ISEP</li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-petrol shrink-0"></span> Membre de l'association <strong>Art'Isep</strong> (art et culture)</li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-steel shrink-0"></span> Capacité d'apprentissage rapide & curiosité intellectuelle</li>
+                    </ul>
+                </div>
+
+                <!-- Centre d'intérêt -->
+                <div class="surface-card rounded-3xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2.5 rounded-xl bg-steel/15 text-petrol">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-espresso">Centre d'intérêt</h3>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-cream/70 border border-terracotta/20 space-y-1.5">
+                            <h4 class="font-bold text-espresso text-base">Crochet</h4>
+                            <p class="text-sm text-espresso/85 leading-relaxed">
+                                Pratique régulière qui développe la <strong>dextérité</strong>, la <strong>créativité</strong> et une grande <strong>concentration</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-xs font-mono text-terracotta pt-2">
+                        Minutie & patience appliquées aux projets techniques
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. SECTION CONTACT -->
+        <section id="contact" class="scroll-mt-24">
+            <div class="cream-card rounded-3xl p-6 sm:p-10 lg:p-12 border-2 border-petrol/20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                    
+                    <!-- Coordonnées directes -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div>
+                            <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-semibold">Recrutement Alternance 2026</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-petrol mt-1">Prenons contact</h2>
+                        </div>
+                        <p class="text-sm sm:text-base text-espresso/90 leading-relaxed">
+                            À la recherche d'une <strong>alternance de 24 mois dès octobre 2026</strong> en informatique industrielle ou data industrielle, je serais ravie d'échanger avec vous sur vos projets et besoins.
+                        </p>
+
+                        <div class="space-y-3">
+                            <a href="mailto:kaminatadeffahaby@gmail.com" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white hover:border-petrol border border-terracotta/20 transition-colors shadow-sm">
+                                <div class="p-2.5 rounded-xl bg-petrol text-white">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <span class="block text-xs text-terracotta font-medium">Email</span>
+                                    <span class="text-sm font-bold text-espresso truncate block">kaminatadeffahaby@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <a href="tel:+33666430869" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white hover:border-petrol border border-terracotta/20 transition-colors shadow-sm">
+                                <div class="p-2.5 rounded-xl bg-steel text-white">
+                                    <i data-lucide="phone" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-terracotta font-medium">Téléphone</span>
+                                    <span class="text-sm font-bold text-espresso">+33 6 66 43 08 69</span>
+                                </div>
+                            </a>
+
+                            <a href="https://github.com/AmK325" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white hover:border-petrol border border-terracotta/20 transition-colors shadow-sm">
+                                <div class="p-2.5 rounded-xl bg-espresso text-white">
+                                    <i data-lucide="github" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-terracotta font-medium">GitHub</span>
+                                    <span class="text-sm font-bold text-espresso font-mono">@AmK325</span>
+                                </div>
+                            </a>
+
+                            <a href="https://www.linkedin.com/search/results/all/?keywords=Aminata%20Deffa%20Haby%20KANE" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white hover:border-petrol border border-terracotta/20 transition-colors shadow-sm">
+                                <div class="p-2.5 rounded-xl bg-terracotta text-white">
+                                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-terracotta font-medium">LinkedIn</span>
+                                    <span class="text-sm font-bold text-espresso">Aminata Deffa Haby KANE</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de message rapide -->
+                    <div class="lg:col-span-7 no-print">
+                        <form id="contact-form" class="space-y-4 bg-white p-6 sm:p-8 rounded-3xl border border-terracotta/20 shadow-sm">
+                            <h3 class="text-lg font-bold text-espresso">Envoyer un message rapide</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="sender-name" class="block text-xs font-semibold text-espresso mb-1.5">Votre nom / Entreprise</label>
+                                    <input type="text" id="sender-name" required placeholder="Ex: Camille Martin - Industrie 4.0" class="w-full px-4 py-3 rounded-xl bg-cream/50 border border-terracotta/25 text-espresso placeholder-terracotta/50 text-sm focus:outline-none focus:border-petrol focus:bg-white">
+                                </div>
+                                <div>
+                                    <label for="sender-email" class="block text-xs font-semibold text-espresso mb-1.5">Votre email</label>
+                                    <input type="email" id="sender-email" required placeholder="contact@entreprise.fr" class="w-full px-4 py-3 rounded-xl bg-cream/50 border border-terracotta/25 text-espresso placeholder-terracotta/50 text-sm focus:outline-none focus:border-petrol focus:bg-white">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-xs font-semibold text-espresso mb-1.5">Sujet</label>
+                                <select id="subject" class="w-full px-4 py-3 rounded-xl bg-cream/50 border border-terracotta/25 text-espresso text-sm focus:outline-none focus:border-petrol focus:bg-white">
+                                    <option value="Opportunité d'alternance (Octobre 2026)">Opportunité d'alternance (Octobre 2026)</option>
+                                    <option value="Demande d'entretien">Demande d'entretien</option>
+                                    <option value="Échange sur un projet IoT / Data">Échange sur un projet IoT / Data</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-xs font-semibold text-espresso mb-1.5">Message</label>
+                                <textarea id="message" rows="4" required placeholder="Bonjour Aminata, votre profil en informatique et data industrielle a retenu notre attention..." class="w-full px-4 py-3 rounded-xl bg-cream/50 border border-terracotta/25 text-espresso placeholder-terracotta/50 text-sm focus:outline-none focus:border-petrol focus:bg-white"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3.5 px-6 rounded-xl font-semibold text-white bg-petrol hover:bg-steel shadow-md transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Préparer l'envoi par email</span>
+                            </button>
+                            <div id="form-feedback" class="hidden p-3.5 rounded-xl bg-cream border border-petrol/30 text-sm font-medium text-espresso text-center"></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- PIED DE PAGE                                                          -->
+    <!-- ===================================================================== -->
+    <footer class="relative z-10 border-t border-cream bg-white/90 py-8 mt-12 no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-espresso/80">
+            <p class="font-medium">© 2026 <strong class="text-espresso">Aminata Deffa Haby KANE</strong> — Alternance Informatique & Data Industrielle.</p>
+            <div class="flex items-center gap-4 font-mono">
+                <a href="mailto:kaminatadeffahaby@gmail.com" class="hover:text-petrol transition-colors">Email</a>
+                <span>•</span>
+                <a href="tel:+33666430869" class="hover:text-petrol transition-colors">+33 6 66 43 08 69</a>
+                <span>•</span>
+                <a href="https://github.com/AmK325" target="_blank" rel="noopener noreferrer" class="hover:text-petrol transition-colors">GitHub @AmK325</a>
+                <span>•</span>
+                <a href="https://www.linkedin.com/search/results/all/?keywords=Aminata%20Deffa%20Haby%20KANE" target="_blank" rel="noopener noreferrer" class="hover:text-petrol transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- SCRIPTS JAVASCRIPT (Bulles, Menu Déroulant, Filtres, Contact)         -->
+    <!-- ===================================================================== -->
+    <script>
+        // 1. Initialisation des icônes Lucide
+        lucide.createIcons();
+
+        // 2. Génération des bulles flottantes aux couleurs exactes (#016180, #4A8CB0, #F8EDE5, #8C5C47)
+        function createBubbles() {
+            const container = document.getElementById('bubbles-layer');
+            if (!container) return;
+
+            const variants = ['bubble-petrol', 'bubble-steel', 'bubble-cream', 'bubble-terracotta'];
+            const bubbleCount = 20;
+
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                const variant = variants[i % variants.length];
+                const size = Math.floor(Math.random() * 95) + 35; // 35px à 130px
+                const left = Math.floor(Math.random() * 96);
+                const duration = Math.floor(Math.random() * 14) + 16; // 16s à 30s
+                const delay = Math.floor(Math.random() * 18);
+
+                bubble.className = `bubble ${variant}`;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `-${delay}s`;
+
+                container.appendChild(bubble);
+            }
+        }
+        createBubbles();
+
+        // 3. Gestion du Menu Déroulant Desktop ("Compétences")
+        const dropdownWrapper = document.getElementById('desktop-dropdown-wrapper');
+        const dropdownBtn = document.getElementById('desktop-dropdown-btn');
+        const dropdownChevron = document.getElementById('dropdown-chevron');
+
+        function toggleDesktopDropdown(forceState) {
+            const isOpen = forceState !== undefined ? forceState : !dropdownWrapper.classList.contains('dropdown-open');
+            dropdownWrapper.classList.toggle('dropdown-open', isOpen);
+            dropdownBtn.setAttribute('aria-expanded', isOpen);
+            dropdownChevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDesktopDropdown();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownWrapper.contains(e.target)) {
+                toggleDesktopDropdown(false);
+            }
+        });
+
+        // 4. Gestion du Menu Mobile et de l'accordéon Compétences
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileAccordionBtn = document.getElementById('mobile-accordion-btn');
+        const mobileAccordionContent = document.getElementById('mobile-accordion-content');
+        const mobileAccordionChevron = document.getElementById('mobile-accordion-chevron');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileAccordionBtn.addEventListener('click', () => {
+            const isHidden = mobileAccordionContent.classList.toggle('hidden');
+            mobileAccordionChevron.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 5. Filtrage dynamique des compétences (Menu déroulant + onglets)
+        function filterSkills(category) {
+            toggleDesktopDropdown(false);
+
+            const cards = document.querySelectorAll('.skill-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.className = 'filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-petrol text-white shadow-sm transition-all';
+                } else {
+                    btn.className = 'filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-cream text-espresso hover:bg-steel/20 border border-terracotta/20 transition-all';
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 6. Formulaire de contact : ouverture directe du client mail pré-rempli + message de confirmation
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const sender = document.getElementById('sender-name').value.trim();
+            const email = document.getElementById('sender-email').value.trim();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value.trim();
+
+            const mailtoBody = encodeURIComponent(`De : ${sender} (${email})\n\n${message}`);
+            const mailtoLink = `mailto:kaminatadeffahaby@gmail.com?subject=${encodeURIComponent(subject)}&body=${mailtoBody}`;
+
+            formFeedback.textContent = `Merci ${sender} ! Votre messagerie va s'ouvrir pour envoyer ce message directement à kaminatadeffahaby@gmail.com.`;
+            formFeedback.classList.remove('hidden');
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+</body>
+</html>
